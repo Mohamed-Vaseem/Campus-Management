@@ -1,0 +1,26 @@
+spring:
+  datasource:                      # restricted role: subject to row-level security
+    url: ${DB_URL:jdbc:postgresql://localhost:5432/staffcoord}
+    username: smartstaff_app
+    password: ${DB_APP_PASSWORD}
+  flyway:                          # schema owner: migrations only, never used by request handling
+    url: ${DB_URL:jdbc:postgresql://localhost:5432/staffcoord}
+    user: ${DB_OWNER_USER:staffowner}
+    password: ${DB_OWNER_PASSWORD}
+    placeholders:
+      app_password: ${DB_APP_PASSWORD}
+  jackson:
+    default-property-inclusion: always
+app:
+  jwt-secret: ${JWT_SECRET}
+  jwt-minutes: 60
+  stale-minutes: 90                # location older than this is flagged stale
+  escalate-minutes: 10             # unanswered calls auto-escalate after this
+  cors-origin: ${CORS_ORIGIN:http://localhost:5173}
+  bootstrap:
+    admin-email: ${BOOTSTRAP_ADMIN_EMAIL:}
+    admin-password: ${BOOTSTRAP_ADMIN_PASSWORD:}
+server:
+  error:
+    include-message: never
+    include-stacktrace: never
